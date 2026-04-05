@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Health Checkup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>HEALTH CHECKUP</h1>
+
+    <div class="container">
+        <div class="left">
+            <div class="tabs">
+                <div class="tab active">Symptom Checker</div>
+                <div class="tab">Find My Doctor</div>
+            </div>
+            
+            <h2>Disease Checker</h2>
+            <p style="font-size: 12px; margin-bottom: 15px;">Select 3 to 4 symptoms below:</p>
+            
+            <form id="symptom-form">
+                {% for i in range(1, 5) %}
+                <div class="form-group">
+                    <select name="s{{i}}" class="symptom-select">
+                        <option value="">-- Select Symptom {{i}} --</option>
+                        {% for sym in symptoms %}
+                        <option value="{{sym.id}}">{{ sym.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endfor %}
+                <button type="submit">Analyze Symptoms</button>
+            </form>
+        </div>
+
+        <div class="right">
+            <div class="loader" id="loader"></div>
+            
+            <div id="placeholder-text">
+                <h3>Awaiting Inputs</h3>
+                <p>Select your symptoms on the left to see predictions.</p>
+            </div>
+
+            <div id="result-card" class="result-card">
+                <h3>Predicted Disease</h3>
+                <div class="disease-name" id="predicted-disease">...</div>
+                <p class="disclaimer">Note: This is an AI prediction and not a substitute for professional medical advice.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="history-dashboard">
+        <div class="history-header">
+            <h3>Prediction History</h3>
+            <button type="button" id="clear-history" class="clear-btn">Clear History</button>
+        </div>
+        <div class="history-list" id="history-list">
+            <p class="empty-history">No past predictions yet.</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
